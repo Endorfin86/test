@@ -1,0 +1,30 @@
+<p>{{ menu }}</p>
+
+{% load mptt_tags %}
+<div class="menu">
+    <ul>
+        {% recursetree items %}
+             {% if menu == node.menu %}
+             <li>
+             <details>
+                {% if select.slug == node.slug %}
+                <summary class="select"><a href="{% url 'page' node.slug %}">{{ node.title }}</a></summary>
+                {% if not node.is_leaf_node %}
+                <ul class="children">
+                      {{ children }}
+                </ul>
+                {% endif %}
+                {% else %}
+                <summary><a href="{% url 'page' node.slug %}">{{ node.title }}</a></summary>
+                {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+                {% endif %}
+                {% endif %}
+             </details>
+             </li>
+            {% endif %}
+        {% endrecursetree %}
+    </ul>
+</div>
